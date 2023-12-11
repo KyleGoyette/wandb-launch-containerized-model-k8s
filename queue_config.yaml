@@ -1,0 +1,20 @@
+spec:
+  template:
+    spec:
+      containers:
+        - env:
+            - name: MODEL_SERVER_URL
+              value: http://localhost:8501
+          image: ${image_uri}
+          imagePullPolicy: Always
+        - args:
+            - --port=8502
+            - --rest_api_port=8501
+            - --model_name=saved_model
+            - --model_base_path=/models/saved_model
+          name: tensorflow-model-server
+          image: "{{modelImage}}"
+          ports:
+            - containerPort: 8501
+      restartPolicy: Never
+      shareProcessNamespace: true

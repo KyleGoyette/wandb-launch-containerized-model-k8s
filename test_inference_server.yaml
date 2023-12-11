@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tensorflow-job
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: tensorflow-model-server
+        imagePullPolicy: Always
+        image: us-central1-docker.pkg.dev/mlw-launch-debugging/launchregressionimages/test-model:v0
+        ports:
+        - containerPort: 8501
+        command: ["tensorflow_model_server"]
+        args:
+        - --port=8501
+        - --rest_api_port=8501
+        - --model_name=my_model
+        - --model_base_path=/models/saved_model

@@ -1,0 +1,6 @@
+FROM python:3.8
+RUN mkdir /src
+COPY ./inference.py /src
+WORKDIR /src
+RUN pip install wandb numpy
+ENTRYPOINT [ "env", "python3", "inference.py"]
